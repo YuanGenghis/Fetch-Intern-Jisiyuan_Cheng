@@ -13,7 +13,19 @@ public class mycode {
         HashMap<String, Integer> payers = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader("transactions.csv"))) {
             String line;
+
+            // First line of csv should be ""payer","points","timestamp""
             String nameTag = br.readLine();
+            String[] tempValue = nameTag.split(",");
+            // Get the first element of first line, it should be "payer"
+            String tmp = new String(tempValue[0].substring(1, tempValue[0].length() - 1));
+            // Making sure wheter the first line is tag or not, if it is tag, do nothing,
+            // else add it to records
+            if (!tmp.equals("payer")) {
+                records.add(Arrays.asList(tempValue));
+            }
+
+            // Add all other lines to records
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 records.add(Arrays.asList(values));
